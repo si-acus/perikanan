@@ -6,19 +6,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createItem } from '../actions/ItemActions';
 
 const addItemSchema = Yup.object().shape({
+  uuid: Yup.string()
+    .required('Komoditas is required'),
   komoditas: Yup.string()
     .required('Komoditas is required'),
-  area_provinsi: Yup.string()
+  provinsi: Yup.string()
     .required('Provinsi is required'),
-  area_kota: Yup.string()
+  kota: Yup.string()
     .required('Kota is required'),
   size: Yup.string()
     .required('size is required'),
   price: Yup.number()
     .required('price is required'),
 });
-
-
 
 const AddItem = (props) => {
   const sizes = useSelector(state => state.sizes);
@@ -41,8 +41,8 @@ const AddItem = (props) => {
     () => {
       handleChangeProv = (value, callback) => {
         const area = areas.filter(area => area.city === value);
-        area[0] && callback('area_provinsi', area[0].province);
-        area[0] && callback('area_kota', area[0].city);
+        area[0] && callback('provinsi', area[0].province);
+        area[0] && callback('kota', area[0].city);
       };
     },
     [areas, handleChangeProv],
@@ -56,12 +56,12 @@ const AddItem = (props) => {
       centered
     >
       <Formik
-        initialValues={{ komoditas: '', area_provinsi: '', area_kota: '', size: sizes[range] && sizes[range].size, price: null }}
+        initialValues={{ komoditas: '', provinsi: '', kota: '', size: sizes[range] && sizes[range].size, price: null }}
         validationSchema={addItemSchema}
         onSubmit={(values, actions) => {
           dispatch(createItem(values));
           actions.setSubmitting(false);
-          props.onHide()
+          props.onHide();
         }}
       >
         {({ touched, errors, isSubmitting, setFieldValue, handleSubmit }) => (
@@ -90,14 +90,14 @@ const AddItem = (props) => {
                 <label htmlFor="provinsi">provinsi</label>
                 <Field
                   type="text"
-                  name="area_provinsi"
+                  name="provinsi"
                   placeholder="Enter provinsi"
                   className={`form-control ${touched.provinsi && errors.provinsi ? 'is-invalid' : ''}`}
                   disabled
                 />
                 <ErrorMessage
                   component="div"
-                  name="area_provinsi"
+                  name="provinsi"
                   className="invalid-feedback"
                 />
               </div>
@@ -105,7 +105,7 @@ const AddItem = (props) => {
                 <label htmlFor="kota">kota</label>
                 <Field
                   type="text"
-                  name="area_kota"
+                  name="kota"
                   placeholder="Enter kota"
                   className={`form-control ${touched.kota && errors.kota ? 'is-invalid' : ''}`}
                   as="select"
@@ -116,7 +116,7 @@ const AddItem = (props) => {
                 </Field>
                 <ErrorMessage
                   component="div"
-                  name="area_provinsi"
+                  name="kota"
                   className="invalid-feedback"
                 />
               </div>

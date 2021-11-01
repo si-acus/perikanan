@@ -23,7 +23,6 @@ export const createItem = params => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params)
   };
-  console.log("params", params)
   fetch(BASE_URL_ITEM, requestOptions)
     .then(() => {
       dispatch({ type: CREATE_ITEM, item: params });

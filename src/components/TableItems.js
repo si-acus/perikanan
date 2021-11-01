@@ -1,8 +1,18 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import { useSelector, useState } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup, InputGroup, FormControl, Card } from 'react-bootstrap';
 import AddItem from './AddItem';
+import { deleteItem } from '../actions/ItemActions';
+
+
+const ActionsRow = ({ row }) => {
+  const dispatch = useDispatch();
+  return (<ButtonGroup variant="primary" aria-label="Basic example">
+    <Button size="sm"><span className="material-icons">edit</span></Button>
+    <Button variant="danger" size="sm" onClick={() => dispatch(deleteItem(row.uuid))}><span className="material-icons">delete</span></Button>
+  </ButtonGroup>);
+};
 
 const columns = [
   {
@@ -31,11 +41,7 @@ const columns = [
     sortable: true,
   },
   {
-    cell: row => (
-      <ButtonGroup variant="primary" aria-label="Basic example">
-        <Button size="sm"><span className="material-icons">edit</span></Button>
-        <Button variant="danger" size="sm"><span className="material-icons">delete</span></Button>
-      </ButtonGroup>),
+    cell: row => (<ActionsRow row={row} />),
     allowOverflow: true,
     button: true,
     width: '85px',

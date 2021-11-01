@@ -12,8 +12,6 @@ class ItemController {
   getById = (uuid) => {
     return steinStore.read(ITEM_SHEET, { search: { uuid } });
   }
-
-
   add = (item = {
     komoditas: null,
     area_provinsi: null,
@@ -24,9 +22,9 @@ class ItemController {
   }) => {
     const uuid = uuidv4();
     const now = moment();
-    return steinStore.append(ITEM_SHEET, {
+    return steinStore.append(ITEM_SHEET, [{
       uuid, tgl_parsed: now.toISOString, timestamp: now.valueOf(), ...item
-    });
+    }]).then((r)=>console.log(r));
   }
 
   update = (uuid, item = {

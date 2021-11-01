@@ -10,9 +10,11 @@ export const appendRows = (url, sheetName, rows) => {
   return new Promise((resolve, reject) => {
     fetch(newUrl, options)
       .then(apiResponse => {
+        console.log("apiResponse", apiResponse.json());
         resolve(apiResponse.json());
       })
       .catch(err => {
+        console.log("error", err);
         reject(err);
       });
   });

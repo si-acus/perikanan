@@ -11,15 +11,15 @@ class SteinStore {
   };
 
   append = (sheetName, rows ) => {
-    return appendRows(this.url, sheetName, rows);
+    return appendRows(url, sheetName, rows);
   };
 
   edit = (sheetName, { search, set, limit }) => {
-    return editRows(this.url, sheetName, { search, set, limit });
+    return editRows(url, sheetName, { search, set, limit });
   };
 
   remove = ( sheetName,{ search, limit }) => {
-    return removeRows(this.url, sheetName, { search, limit });
+    return removeRows(url, sheetName, { search, limit });
   };
 
 }
