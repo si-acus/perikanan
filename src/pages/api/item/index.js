@@ -14,7 +14,8 @@ function handler(req, res) {
 
   function getItems() {
     itemController.getAll().then(items => {
-      return res.status(200).json(items);
+
+      return res.status(200).json(items.filter(item => item.uuid?true:false));
     });
   }
 

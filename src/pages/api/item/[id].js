@@ -31,7 +31,9 @@ function handler(req, res) {
   }
 
   function deleteItem() {
-    itemController.remove(req.query.id);
-    return res.status(200).json({});
+    itemController.remove(req.query.id)
+      .then(() => {
+        return res.status(200).json({});
+      });
   }
 }
