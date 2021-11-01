@@ -2,12 +2,20 @@ import React, { useEffect } from 'react';
 import { Navbar, Container, Nav} from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { getAllItem } from '../actions/ItemActions';
+import { getAllArea } from '../actions/AreaActions';
+import { getAllSize } from '../actions/SizeActions';
 import Table from '../components/TableItems';
 
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllItem());
+  }, []);
+  useEffect(() => {
+    dispatch(getAllArea());
+  }, []);
+  useEffect(() => {
+    dispatch(getAllSize());
   }, []);
 
   return (

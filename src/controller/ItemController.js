@@ -1,5 +1,6 @@
 import moment from 'moment';
 import steinStore from '../lib/SteinStore';
+import { v4 as uuidv4 } from 'uuid';
 
 const ITEM_SHEET = 'list';
 
@@ -21,11 +22,11 @@ class ItemController {
     price: null,
     timestamp: null
   }) => {
-    const uuid = this.generateUuid();
+    const uuid = uuidv4();
     const now = moment();
-    return steinStore.append(ITEM_SHEET, [{
+    return steinStore.append(ITEM_SHEET, {
       uuid, tgl_parsed: now.toISOString, timestamp: now.valueOf(), ...item
-    }]);
+    });
   }
 
   update = (uuid, item = {
@@ -46,11 +47,6 @@ class ItemController {
     return steinStore.remove(ITEM_SHEET, { search: { uuid } });
   }
 
-  generateUuid = () => {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-    );
-  }
 }
 
 const itemController = new ItemController();

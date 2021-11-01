@@ -17,23 +17,13 @@ export const getAllItem = () => async (dispatch) => {
     });
 };
 
-// export const getByIdItem = id => async (dispatch) => {
-//   fetch(`${BASE_URL_ITEM}/${id}`)
-//   .then(res => {
-//     dispatch({ type: GET_ITEMS, items: res.data });
-//   }).catch(() => {
-//     dispatch({ type: GET_ITEMS, items: [] });
-//   });
-// }
-
-
 export const createItem = params => async (dispatch) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params)
   };
-
+  console.log("params", params)
   fetch(BASE_URL_ITEM, requestOptions)
     .then(() => {
       dispatch({ type: CREATE_ITEM, item: params });
