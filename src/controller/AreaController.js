@@ -1,6 +1,6 @@
 import steinStore from '../lib/SteinStore';
 
-const AREA_SHEET = 'option-area';
+const AREA_SHEET = 'option_area';
 
 class AreaController {
   getAll = (params = { limit: 0, offsite: 0, search: '' }) => {
