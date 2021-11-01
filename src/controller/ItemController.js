@@ -24,7 +24,7 @@ class ItemController {
     const now = moment();
     return steinStore.append(ITEM_SHEET, [{
       uuid, tgl_parsed: now.toISOString, timestamp: now.valueOf(), ...item
-    }]).then((r)=>console.log(r));
+    }]);
   }
 
   update = (uuid, item = {
@@ -36,7 +36,7 @@ class ItemController {
   }) => {
     const now = moment();
     return steinStore.edit(ITEM_SHEET, {
-      search: { uuid },
+      search: { uuid: uuid },
       set: { timestamp: now.valueOf(), ...item }
     });
   }

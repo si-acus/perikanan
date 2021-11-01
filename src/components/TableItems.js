@@ -3,13 +3,18 @@ import DataTable from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, ButtonGroup, InputGroup, FormControl, Card } from 'react-bootstrap';
 import AddItem from './AddItem';
+import EditItem from './EditItem';
 import { deleteItem } from '../actions/ItemActions';
 
 
 const ActionsRow = ({ row }) => {
   const dispatch = useDispatch();
+  const [modalShow, setModalShow] = React.useState(false);
+
   return (<ButtonGroup variant="primary" aria-label="Basic example">
-    <Button size="sm"><span className="material-icons">edit</span></Button>
+    <EditItem row={row} show={modalShow}
+      onHide={() => setModalShow(false)} />
+    <Button size="sm" onClick={() => setModalShow(true)}><span className="material-icons">edit</span></Button>
     <Button variant="danger" size="sm" onClick={() => dispatch(deleteItem(row.uuid))}><span className="material-icons">delete</span></Button>
   </ButtonGroup>);
 };
@@ -83,7 +88,6 @@ const indexPage = () => {
         setFilterText('');
       }
     };
-
 
     return (
       <FilterComponent

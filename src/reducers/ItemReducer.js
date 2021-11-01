@@ -1,8 +1,6 @@
 import {
   GET_ITEMS,
   CREATE_ITEM,
-  UPDATE_ITEM,
-  DELETE_ITEM
 } from '../actions/actionTypes';
 
 const initialState = [];

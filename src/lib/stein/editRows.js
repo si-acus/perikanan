@@ -1,8 +1,7 @@
 export const editRows = (url, sheetName, { search, set, limit }) => {
 
   const newLimit = !isNaN(limit) && limit ? limit : null; // validate limit
-  url += `${sheetName}`;
-
+  const newUrl = `${url}${sheetName}`;
   // data to post
   const data = {
     condition: search,
@@ -18,7 +17,7 @@ export const editRows = (url, sheetName, { search, set, limit }) => {
   };
 
   return new Promise((resolve, reject) => {
-    fetch(url, options)
+    fetch(newUrl, options)
       .then(apiResponse => {
         resolve(apiResponse.json());
       })

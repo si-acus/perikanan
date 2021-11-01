@@ -3,7 +3,6 @@ export const removeRows = (url, sheetName, { search, limit }) => {
   
   const newLimit = !isNaN(limit) && limit ? limit : null; // validate limit
   const newUrl = `${url}${sheetName}`;
-  console.log(url)
   // data to post
   const data = {
     condition: search,

@@ -61,14 +61,14 @@ const AddItem = (props) => {
         onSubmit={(values, actions) => {
           dispatch(createItem(values));
           actions.setSubmitting(false);
-          props.onHide()
+          props.onHide();
         }}
       >
         {({ touched, errors, isSubmitting, setFieldValue, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                Modal heading
+                Add Item
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>

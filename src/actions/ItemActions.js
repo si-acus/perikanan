@@ -37,7 +37,7 @@ export const updateItem = params => async (dispatch) => {
     body: JSON.stringify(params)
   };
 
-  fetch(BASE_URL_ITEM, requestOptions)
+  fetch(`${BASE_URL_ITEM}/${params.uuid}`, requestOptions)
     .then(() => {
       dispatch({ type: UPDATE_ITEM });
     }).catch(() => {

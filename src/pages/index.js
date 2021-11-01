@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navbar, Container, Nav} from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { getAllItem } from '../actions/ItemActions';
 import { getAllArea } from '../actions/AreaActions';

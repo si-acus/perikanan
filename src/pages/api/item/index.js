@@ -19,9 +19,8 @@ function handler(req, res) {
   }
 
   function addItem(req, res) {
-    itemController.add(req.body).then((e) => {
-      console.log(e);
-      return res.status(200).json({})
+    itemController.add(req.body).then(() => {
+      return res.status(200).json({});
     }).catch(error => {
       return res.status(400).json({ message: error });
     });

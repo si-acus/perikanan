@@ -3,16 +3,16 @@ import { Modal, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { createItem } from '../actions/ItemActions';
+import { updateItem } from '../actions/ItemActions';
 
-const addItemSchema = Yup.object().shape({
+const editItemSchema = Yup.object().shape({
   uuid: Yup.string()
     .required('Komoditas is required'),
   komoditas: Yup.string()
     .required('Komoditas is required'),
-  provinsi: Yup.string()
+  area_provinsi: Yup.string()
     .required('Provinsi is required'),
-  kota: Yup.string()
+  area_kota: Yup.string()
     .required('Kota is required'),
   size: Yup.string()
     .required('size is required'),
@@ -20,7 +20,7 @@ const addItemSchema = Yup.object().shape({
     .required('price is required'),
 });
 
-const AddItem = (props) => {
+const EditItem = (props) => {
   const sizes = useSelector(state => state.sizes);
   const areas = useSelector(state => state.areas);
   const dispatch = useDispatch();
@@ -41,13 +41,12 @@ const AddItem = (props) => {
     () => {
       handleChangeProv = (value, callback) => {
         const area = areas.filter(area => area.city === value);
-        area[0] && callback('provinsi', area[0].province);
-        area[0] && callback('kota', area[0].city);
+        area[0] && callback('area_provinsi', area[0].province);
+        area[0] && callback('area_kota', area[0].city);
       };
     },
     [areas, handleChangeProv],
   );
-
   return (
     <Modal
       {...props}
@@ -56,10 +55,17 @@ const AddItem = (props) => {
       centered
     >
       <Formik
-        initialValues={{ komoditas: '', provinsi: '', kota: '', size: sizes[range] && sizes[range].size, price: null }}
-        validationSchema={addItemSchema}
+        initialValues={{
+          uuid: props.row.uuid ? props.row.uuid : '',
+          komoditas: props.row.komoditas ? props.row.komoditas : '',
+          area_provinsi: props.row.area_provinsi ? props.row.area_provinsi : '',
+          area_kota: props.row.area_kota ? props.row.area_kota : '',
+          size: sizes[range] && sizes[range].size,
+          price: props.row.price ? props.row.price : ''
+        }}
+        validationSchema={editItemSchema}
         onSubmit={(values, actions) => {
-          dispatch(createItem(values));
+          dispatch(updateItem(values));
           actions.setSubmitting(false);
           props.onHide();
         }}
@@ -68,10 +74,24 @@ const AddItem = (props) => {
           <Form onSubmit={handleSubmit}>
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                Modal heading
+                Edit Item
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+              <div className="form-group">
+                <label htmlFor="uuid">uuid</label>
+                <Field
+                  type="text"
+                  name="uuid"
+                  placeholder="Enter uuid"
+                  className={`form-control ${touched.uuid && errors.uuid ? 'is-invalid' : ''}`}
+                />
+                <ErrorMessage
+                  component="div"
+                  name="uuid"
+                  className="invalid-feedback"
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="komoditas">Komoditas</label>
                 <Field
@@ -87,25 +107,25 @@ const AddItem = (props) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="provinsi">provinsi</label>
+                <label htmlFor="area_provinsi">provinsi</label>
                 <Field
                   type="text"
-                  name="provinsi"
+                  name="area_provinsi"
                   placeholder="Enter provinsi"
-                  className={`form-control ${touched.provinsi && errors.provinsi ? 'is-invalid' : ''}`}
+                  className={`form-control ${touched.area_provinsi && errors.area_provinsi ? 'is-invalid' : ''}`}
                   disabled
                 />
                 <ErrorMessage
                   component="div"
-                  name="provinsi"
+                  name="area_provinsi"
                   className="invalid-feedback"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="kota">kota</label>
+                <label htmlFor="area_kota">kota</label>
                 <Field
                   type="text"
-                  name="kota"
+                  name="area_kota"
                   placeholder="Enter kota"
                   className={`form-control ${touched.kota && errors.kota ? 'is-invalid' : ''}`}
                   as="select"
@@ -116,7 +136,7 @@ const AddItem = (props) => {
                 </Field>
                 <ErrorMessage
                   component="div"
-                  name="kota"
+                  name="area_kota"
                   className="invalid-feedback"
                 />
               </div>
@@ -169,4 +189,4 @@ const AddItem = (props) => {
     </Modal>
   );
 };
-export default AddItem;
+export default EditItem;
